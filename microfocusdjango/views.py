@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import CustomUser, AccessKey
 from django.urls import reverse
 from django.contrib import messages
@@ -109,12 +109,28 @@ def school_dashboard(request):
     access_keys = AccessKey.objects.filter(user=current_user)
     return render(request, 'school_dashboard.html', {'access_keys': access_keys})
 
+
 @login_required
 def admin_dashboard(request):
     access_keys = AccessKey.objects.all()
     return render(request, 'admin_dashboard.html', {'access_keys': access_keys})
 
+
 @login_required
 def logout_user(request):
     logout(request)
     return redirect('/')
+
+
+@login_required
+def admin_revoke_key(request, key_id):
+    access_key = get_object_or_404(AccessKey, pk=key_id)
+    if access_key.status == 'revoked':
+        messages.error(request, 'Access key already revoked')
+
+    else:
+        access_key.revoke_key()
+        messages.success(request, 'Access key revoked successfully')
+    
+    return redirect('admin_dashboard')
+

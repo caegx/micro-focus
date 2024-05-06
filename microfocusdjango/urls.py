@@ -16,5 +16,7 @@ urlpatterns = [
     path('school_dashboard', views.school_dashboard, name='school_dashboard'),
     path('admin_user/dashboard', views.admin_dashboard, name='admin_dashboard'),
     path('logout', views.logout_user, name='logout'),
+    path('admin_user/revoke_key/<int:key_id>', views.admin_revoke_key, name='admin_revoke_key'),
+
 
 ]

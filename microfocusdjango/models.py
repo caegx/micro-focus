@@ -2,6 +2,10 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
+import random, string
+from datetime import timedelta
+
+
 
 
 class CustomUserManager(BaseUserManager):
@@ -62,6 +66,28 @@ class AccessKey(models.Model):
     date_of_procurement = models.DateField(default=timezone.now)
     expiry_date = models.DateField()
     school_email = models.EmailField() 
+
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.expiry_date = self.date_of_procurement + timedelta(days=30)
+            self.school_email = self.user.email
+            self.key = self.generate_key()
+        super().save(*args, **kwargs)
+
+    def generate_key(self, length=16):
+        characters = string.ascii_letters + string.digits
+        return ''.join(random.choices(characters, k=length))
+
+    def is_active(self):
+        return self.status == 'active' and self.expiry_date >= timezone.now().date()
+
+    def is_expired(self):
+        return self.status == 'expired' or self.expiry_date < timezone.now().date()
+
+    def revoke_key(self):
+        self.status = 'revoked'
+        self.save()
 
 
    
