@@ -13,7 +13,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.views import View
 from .utils import account_activation_token
-from django.http import Http404
+from django.http import Http404, JsonResponse
 
 
 
@@ -185,3 +185,27 @@ def verify_payment(request, ref):
             messages.warning(request, 'Sorry payment could not be processed.')
 
     return redirect('school_dashboard')
+
+@login_required
+def get_active_key_details(request):
+    school_email = request.GET.get('school_email')
+
+    if not school_email and request.method == 'GET':
+        school_email = request.GET.get('school_email')  
+
+    if school_email:
+        active_key = AccessKey.objects.filter(school_email=school_email, status='active').first()
+
+        if active_key:
+            data = {
+                'status': 200,
+                'message': 'Active access key found',
+                'key': active_key.key,
+                'date_of_procurement': active_key.date_of_procurement,
+                'expiry_date': active_key.expiry_date
+            }
+
+        else:
+            data = {'status': 404, 'message': 'No active key found'}
+
+        return JsonResponse(data)
