@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        
+        .content-container {
+            height: calc(100vh - 4rem); 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .welcome-text {
+            max-width: 600px;
+            text-align: center;
+        }
+        .cta-buttons {
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+    <nav class="bg-blue-600 p-4 text-white flex justify-between fixed top-0 w-full z-50">
+        <div>
+            <h1 class="text-3xl font-bold">ACCESSKEY MANAGER</h1>
+        </div>
+    </nav>
+
+    <div class="content-container">
+        <div class="max-w-lg">
+            <div class="welcome-text">
+                <h1 class="text-3xl font-bold mb-4">Welcome to Access Key Manager</h1>
+                <p class="text-lg text-gray-700 mb-6">
+                    Our platform provides a streamlined solution for schools to purchase access keys and activate
+                    their accounts on Micro-Focus Inc.'s multitenant school management platform.                </p>
+            </div>
+        
+            <div class="cta-buttons flex justify-center space-x-4">
+                <a href="login" class="text-white">
+                    <button class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700">Login</button>
+                </a>
+                <a href="register" class="text-white">
+                    <button class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700">Join Now</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

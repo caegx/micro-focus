@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 p-4 text-white flex justify-between">
+        <div>
+            <h1 class="text-3xl font-bold">ACCESSKEY MANAGER</h1>
+        </div>
+        <div>
+            <a href="{% url 'logout' %}" class="text-white hover:underline">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Messages -->
+        {% if messages %}
+        <div class="mt-8">
+            {% for message in messages %}
+            <div class="alert bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Get Access Key Button -->
+        <div class="mt-8 flex justify-center">
+            <div class="send-button-container">
+                <a href="">
+                    <button id="send-button" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Get Access Key</button>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Accesskey list -->
+        {% if access_keys %}
+        <div class="mt-8">
+            <h2 class="text-2xl font-semibold text-center">ACCESSKEY LIST</h2>
+            <div id="accesskey-list" class="mt-4 overflow-x-auto">
+                <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
+                    <thead class="bg-blue-600 text-white">
+                        <tr>
+                            <th class="py-2 px-4 text-left">Accesskey</th>
+                            <th class="py-2 px-4 text-left">Date of Procurement</th>
+                            <th class="py-2 px-4 text-left">Expiry Date</th>
+                            <th class="py-2 px-4 text-left">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        {% for access_key in access_keys reversed %}
+                        <tr>
+                            <td class="py-2 px-4">{{ access_key.key }}</td>
+                            <td class="py-2 px-4">{{ access_key.date_of_procurement }}</td>
+                            <td class="py-2 px-4">{{ access_key.expiry_date }}</td>
+                            <td class="py-2 px-4">{{ access_key.status }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
