@@ -126,4 +126,5 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 LOGIN_URL = 'login'
 
-
+PAYSTACK_SK = os.getenv('PAYSTACK_SK')
+PAYSTACK_PK = os.getenv('PAYSTACK_PK')

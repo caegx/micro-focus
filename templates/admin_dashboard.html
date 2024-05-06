@@ -59,7 +59,7 @@
                             <td class="px-4 py-2">{{ access_key.status }}</td>
                             <td class="px-4 py-2">{{ access_key.date_of_procurement }}</td>
                             <td class="px-4 py-2">{{ access_key.expiry_date }}</td>
-                            <td class="px-4 py-2"><a href="" class="text-blue-600 hover:underline">Revoke</a></td>
+                            <td class="px-4 py-2"><a href="{% url 'admin_revoke_key' access_key.id %}" class="text-blue-600 hover:underline">Revoke</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>

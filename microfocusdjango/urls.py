@@ -17,6 +17,9 @@ urlpatterns = [
     path('admin_user/dashboard', views.admin_dashboard, name='admin_dashboard'),
     path('logout', views.logout_user, name='logout'),
     path('admin_user/revoke_key/<int:key_id>', views.admin_revoke_key, name='admin_revoke_key'),
+    path('initialize-payment', views.initialize_payment, name='initialize_payment'),
+    path('verify-payment/<str:ref>', views.verify_payment, name='verify_payment'),
+
 
 
 ]

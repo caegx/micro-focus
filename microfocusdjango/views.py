@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import CustomUser, AccessKey
+from .models import CustomUser, AccessKey, Payment
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -13,6 +13,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.views import View
 from .utils import account_activation_token
+from django.http import Http404
 
 
 
@@ -134,3 +135,53 @@ def admin_revoke_key(request, key_id):
     
     return redirect('admin_dashboard')
 
+
+@login_required
+def initialize_payment(request):
+    active_key = AccessKey.objects.filter(user=request.user, status='active')
+    if active_key.exists():
+        messages.error(request, "You already have an active access key.")
+        return redirect('school_dashboard')
+    
+    else:
+        if request.method == 'POST':
+            email = request.POST['email']
+            amount_str = 100
+            amount = float(amount_str)
+
+            if not email:
+                messages.error(request, 'Enter email')
+            
+            else:
+                payment = Payment.objects.create(amount=amount, user=request.user, email=email)
+                payment.save()
+                paystack_pk = settings.PAYSTACK_PK
+                return render(request, 'make_payment.html', {'payment': payment, 'paystack_pk': paystack_pk})
+            
+    return render(request, 'initialize_payment.html')
+
+
+@login_required
+def make_payment(request):
+    return render(request, 'make_payment.html')
+
+
+@login_required
+def verify_payment(request, ref):
+    try:
+        payment = Payment.objects.get(ref=ref)
+    except Payment.DoesNotExist:
+        raise Http404("Payment not found")
+
+    if payment.verified:
+        messages.warning(request, 'Access key already generated for this payment.')
+    else:
+        verified = payment.verify_payment()
+        if verified:
+            access_key = AccessKey.objects.create(user=request.user)
+            access_key.generate_key()
+            messages.success(request, "Access key generated successfully.")
+        else:
+            messages.warning(request, 'Sorry payment could not be processed.')
+
+    return redirect('school_dashboard')
