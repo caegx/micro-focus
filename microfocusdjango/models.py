@@ -4,7 +4,8 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
 import random, string
 from datetime import timedelta
-
+from .paystack import Paystack
+import secrets
 
 
 
@@ -89,6 +90,34 @@ class AccessKey(models.Model):
         self.status = 'revoked'
         self.save()
 
+
+
+class Payment(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    amount = models.PositiveIntegerField()
+    email = models.EmailField()
+    ref = models.CharField(max_length=200)
+    verified = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        while not self.ref:
+            ref = secrets.token_urlsafe(50)
+            existing_key = Payment.objects.filter(ref=ref)
+            if not existing_key:
+                self.ref = ref
+        super().save(*args, **kwargs)
+
+    def verify_payment(self):
+        paystack = Paystack()
+        status , result = paystack.verify_payment(self.ref, self.amount)
+        print(f"Paystack API response: {result}")
+        if status and result.get('status') == 'success':
+            self.verified = True
+            self.save()
+            return True
+        else:
+            return False
 
    
 
