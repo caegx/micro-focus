@@ -188,24 +188,25 @@ def verify_payment(request, ref):
 
 @login_required
 def get_active_key_details(request):
-    school_email = request.GET.get('school_email')
+    if request.user.role == 'admin':
+        school_email = request.GET.get('school_email')
 
-    if not school_email and request.method == 'GET':
-        school_email = request.GET.get('school_email')  
+        if not school_email and request.method == 'GET':
+            school_email = request.GET.get('school_email')  
 
-    if school_email:
-        active_key = AccessKey.objects.filter(school_email=school_email, status='active').first()
+        if school_email:
+            active_key = AccessKey.objects.filter(school_email=school_email, status='active').first()
 
-        if active_key:
-            data = {
-                'status': 200,
-                'message': 'Active access key found',
-                'key': active_key.key,
-                'date_of_procurement': active_key.date_of_procurement,
-                'expiry_date': active_key.expiry_date
-            }
+            if active_key:
+                data = {
+                    'status': 200,
+                    'message': 'Active access key found',
+                    'key': active_key.key,
+                    'date_of_procurement': active_key.date_of_procurement,
+                    'expiry_date': active_key.expiry_date
+                }
 
-        else:
-            data = {'status': 404, 'message': 'No active key found'}
+            else:
+                data = {'status': 404, 'message': 'No active key found'}
 
-        return JsonResponse(data)
+            return JsonResponse(data)
