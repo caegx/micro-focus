@@ -3,9 +3,13 @@ Access Key Manager
 Welcome to Access Key Manager, a web application designed to streamline access key management for schools using Micro-Focus Inc.'s multitenant school management platform.
 
 Project Overview
+
 Access Key Manager provides a user-friendly interface for School IT Personnel to purchase access keys, manage key status, and ensure smooth operations for their institution. Additionally, Micro-Focus Admins have access to administrative tools for key revocation, status tracking, and integration endpoints.
+
 Features
+
 School IT Personnel
+
 
 Sign up and log in with email and password, with account verification and reset password feature to recover lost passwords.
 View a list of all access keys, including active, expired, or revoked keys.
@@ -36,4 +40,5 @@ Start the development server: python manage.py runserver.
 Access the application in your web browser at http://localhost:8000.
 
 Deployment
+
 The application is deployed at https://accesskeymanager.pythonanywhere.com
