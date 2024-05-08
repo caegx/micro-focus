@@ -1,5 +1,7 @@
 Access Key Manager
+
 Welcome to Access Key Manager, a web application designed to streamline access key management for schools using Micro-Focus Inc.'s multitenant school management platform.
+
 Project Overview
 Access Key Manager provides a user-friendly interface for School IT Personnel to purchase access keys, manage key status, and ensure smooth operations for their institution. Additionally, Micro-Focus Admins have access to administrative tools for key revocation, status tracking, and integration endpoints.
 Features
