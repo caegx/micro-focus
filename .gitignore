@@ -7,3 +7,5 @@ _pycache_/
 # Ignore Django migration files
 */migrations/*.py
 */migrations/*.pyc
+
+myenv/
