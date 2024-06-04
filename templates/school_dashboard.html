@@ -10,7 +10,7 @@
     <!-- Navbar -->
     <nav class="bg-blue-600 p-4 text-white flex justify-between">
         <div>
-            <h1 class="text-3xl font-bold">ACCESSKEY MANAGER</h1>
+            <h1 class="text-3xl font-bold">ACCESS KEY MANAGER</h1>
         </div>
         <div>
             <a href="{% url 'logout' %}" class="text-white hover:underline">Logout</a>
@@ -33,7 +33,7 @@
         <!-- Get Access Key Button -->
         <div class="mt-8 flex justify-center">
             <div class="send-button-container">
-                <a href="{% url 'initialize_payment' %}">
+                <a href="{% url 'generate_key' %}">
                     <button id="send-button" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Get Access Key</button>
                 </a>
             </div>
@@ -42,12 +42,12 @@
         <!-- Accesskey list -->
         {% if access_keys %}
         <div class="mt-8">
-            <h2 class="text-2xl font-semibold text-center">ACCESSKEY LIST</h2>
+            <h2 class="text-2xl font-semibold text-center">ACCESS KEY LIST</h2>
             <div id="accesskey-list" class="mt-4 overflow-x-auto">
                 <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
                     <thead class="bg-blue-600 text-white">
                         <tr>
-                            <th class="py-2 px-4 text-left">Accesskey</th>
+                            <th class="py-2 px-4 text-left">Access key</th>
                             <th class="py-2 px-4 text-left">Date of Procurement</th>
                             <th class="py-2 px-4 text-left">Expiry Date</th>
                             <th class="py-2 px-4 text-left">Status</th>
