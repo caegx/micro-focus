@@ -211,5 +211,8 @@ def get_active_key_details(request):
 
             return JsonResponse(data)
         
+        else:
+            return JsonResponse({'status': 400, 'message': 'Invalid request'})
+    
     else:
         return HttpResponse('You are not authorized to view this page')
