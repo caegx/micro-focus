@@ -12,23 +12,66 @@ School IT Personnel
 
 
 Sign up and log in with email and password, with account verification and reset password feature to recover lost passwords.
+
 View a list of all access keys, including active, expired, or revoked keys.
+
 View status, date of procurement, and expiry date for each access key.
-Restrict the creation of new keys if an active key is already assigned.
+
+The creation of new keys is resricted if an active key is already assigned.
 
 Micro-Focus Admin
 
 Log in with email and password.
+
 Manually revoke access keys.
+
 View all access keys generated on the platform, including status, procurement date, and expiry date.
+
 Access an endpoint to retrieve details of active keys for a provided school email.
+
+Get Active Key Details:
+
+This endpoint allows you to retrieve the details of an active access key for a given school email.
+
+URL: `/api/get_key_details/`
+
+Method: `GET`
+
+Query Parameters:
+`school_email` (required): The email address associated with the school account.
+
+Success Response:
+
+Code: 200 OK
+
+Content:
+  ```json
+  
+  
+  {
+    "status": 200,
+    "message": "Active access key found",
+    "key": "ABC123DEF456GHI7",
+    "date_of_procurement": "2023-06-01",
+    "expiry_date": "2023-06-30"
+  }
+
+Error Response:
+
+Code: 404 
+Content:
+
+{
+  "status": 404,
+  "message": "No active key found"
+}
 
 Technologies Used
 
 Frontend: HTML, CSS (with Tailwind CSS framework), JavaScript
 Backend: Django (Python web framework)
-Database: PostgreSQL
-Payment Gateway API(TEST MODE): Paystack (for processing payments)
+Database: SQLite
+
 
 Setup Instructions
 
